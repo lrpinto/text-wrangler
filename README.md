@@ -5,7 +5,7 @@ Mini-wrangler system to massage a csv file as specified by given DSL based on AN
 
 - Run `mvn package` to generate the ANTLR4 parser
 - Import the MySQL schema in `main/java/resources/schema.sql`
-- Update the MySQl connection details in `main/java/resources/configuraiton.ini`
+- Update the MySQL connection details in `main/java/resources/configuraiton.ini`
 - Start on App.java for a demonstration on how to use the library
 
 ## Transformations DSL
@@ -36,7 +36,7 @@ Mini-wrangler system to massage a csv file as specified by given DSL based on AN
 
 ## Tests
 
-- No coverage (tcs)
+- No coverage
 
 ## Dependencies
 
