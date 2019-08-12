@@ -173,7 +173,8 @@ public class TextTransformConcat implements ITextTransformConcat {
 			success &= m.matches();
 		}
 		if (!success) {
-			LOGGER.warning("Trasnformation failed: reason= pattern mismatch; expected= " + patterns);
+			LOGGER.warning("Skipped " + toString() + ": reason= pattern mismatch; expected= " + patterns
+					+ "; srcFieldValueMap= " + srcFieldValueMap);
 		} else {
 			success = apply(order);
 		}

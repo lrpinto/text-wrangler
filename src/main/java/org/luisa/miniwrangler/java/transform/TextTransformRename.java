@@ -1,5 +1,6 @@
 package org.luisa.miniwrangler.java.transform;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,11 @@ public class TextTransformRename implements ITextTransformRename {
 
 		protected void initPatternMap() {
 			patternMap.put("d+", "\\d+");
+
+			final String pattern = "([1-9],)?[1-9]{0,2}[0-9]\\.[0-9]([1-9])?";
+			final String mappedPattern = "#,##0.0#";
+
+			patternMap.put(pattern, mappedPattern);
 		}
 
 		@Override
@@ -148,7 +154,12 @@ public class TextTransformRename implements ITextTransformRename {
 		if (pattern != null) {
 			final Matcher m = pattern.matcher(srcFieldValue);
 			if (!m.matches()) {
-				LOGGER.warning("Trasnformation skipped: reason= pattern mismatch; expected= " + pattern);
+				final String mismatch = m.replaceAll("");
+				LOGGER.warning(
+						"Skipped " + toString() + ": reason= pattern mismatches "
+								+ Arrays.toString(mismatch.toCharArray())
+								+ "; expected= " + pattern
+								+ "; srcFieldValue= " + srcFieldValue);
 				return false;
 			}
 		}
