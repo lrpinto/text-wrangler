@@ -14,7 +14,7 @@ PRODUCT_NAME: 'ProductName';
 QUANTITY: 'Quantity';
 UNIT: 'Unit';
 
-MAPPED_PATTERN: ('d+' | 'YYYY' | 'MM' | 'dd' | '[A-Z0-9]+' | '[A-Z]+' | '#,##0.0#');
+MAPPED_PATTERN: ('YYYY' | 'MM' | 'dd' | '#,##0.0#');
 STRING_LITERAL: [A-Za-z0-9._$]+ | DQUOTA_STRING | SQUOTA_STRING | BQUOTA_STRING;
 NEWLINE: '\r'? '\n';
 TERM: ([a-zA-Z0-9,.*^+\-&'":><#![\]] | ESC)+;
