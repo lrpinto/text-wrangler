@@ -70,3 +70,7 @@ local.properties
 .cache-main
 .scala_dependencies
 .worksheet
+
+
+# Project specific
+src\main\resources\transformations.dsl.example
