@@ -1,170 +1,109 @@
 package org.luisa.miniwrangler.java.transform;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.luisa.miniwrangler.java.table.OrderFacade;
+import org.luisa.miniwrangler.java.data.utils.MappedPatternUtil;
+import org.luisa.miniwrangler.java.exception.InvalidDataException;
+import org.luisa.miniwrangler.java.exception.PatternMismatchException;
+import org.luisa.miniwrangler.java.exception.UnknownFieldException;
+import org.luisa.miniwrangler.java.exception.UnknownIndexException;
+import org.luisa.miniwrangler.java.table.Facade;
 
 public class TextTransformRename implements ITextTransformRename {
 
-	public static class Builder implements ITextTransformRenameBuilder {
-		private String orderField;
-		private String srcField;
-		private Pattern pattern;
+    public static class Builder implements ITextTransformRenameBuilder {
+        private String targetField;
+        private String srcField;
+        private Pattern pattern;
 
-		protected final Map<String, String> patternMap = new HashMap<>();
+        @Override
+        public ITextTransformBuilder as(String targetField) {
+            this.targetField = targetField;
+            return this;
+        }
 
-		public Builder() {
-			initPatternMap();
-		}
+        @Override
+        public ITextTransform build() {
+            return new TextTransformRename(this);
+        }
 
-		@Override
-		public ITextTransformBuilder as(String orderField) {
-			this.orderField = orderField;
-			return this;
-		}
+        @Override
+        public ITextTransformBuilder match(String regex) {
+            Pattern pattern = MappedPatternUtil.getInstance().get(regex);
+            if (pattern == null) {
+                pattern = Pattern.compile(regex);
+            }
+            this.pattern = pattern;
+            return this;
+        }
 
-		@Override
-		public ITextTransform build() {
-			return new TextTransformRename(this);
-		}
+        @Override
+        public ITextTransformBuilder rename(String srcField) {
+            this.srcField = srcField;
+            return this;
+        }
+    }
 
-		protected void initPatternMap() {
-			patternMap.put("d+", "\\d+");
+    private final String targetField;
+    private final String srcField;
+    private final Pattern pattern;
 
-			final String pattern = "([1-9],)?[1-9]{0,2}[0-9]\\.[0-9]([1-9])?";
-			final String mappedPattern = "#,##0.0#";
+    private String srcFieldValue;
 
-			patternMap.put(pattern, mappedPattern);
-		}
+    public TextTransformRename(Builder b) {
+        targetField = b.targetField;
+        srcField = b.srcField;
+        pattern = b.pattern;
+    }
 
-		@Override
-		public ITextTransformBuilder match(String pattern) {
-			String regex = patternMap.get(pattern);
-			if (regex == null) {
-				regex = pattern;
-			}
-			this.pattern = Pattern.compile(regex);
-			return this;
-		}
+    @Override
+    public Pattern getPattern() {
+        return pattern;
+    }
 
-		@Override
-		public ITextTransformBuilder rename(String srcField) {
-			this.srcField = srcField;
-			return this;
-		}
-	}
+    @Override
+    public String getSrcField() {
+        return srcField;
+    }
 
-	private static final Logger LOGGER = Logger.getLogger(TextTransformRename.class.getName());
+    @Override
+    public String getTargetField() {
+        return targetField;
+    }
 
-	private final String orderField;
-	private final String srcField;
-	private final Pattern pattern;
+    @Override
+    public void run(Map<String, Integer> srcFieldIndexMap, List<String> currentRow, Facade facade)
+            throws UnknownFieldException, UnknownIndexException, PatternMismatchException, InvalidDataException {
 
-	protected final String ORDER_ID = "OrderID";
+        final Integer index = srcFieldIndexMap.get(srcField);
+        if (index == null) {
+            throw new UnknownIndexException(srcField);
+        }
 
-	private String srcFieldValue;
+        final String value = currentRow.get(index);
+        setSrcFieldValue(value);
 
-	protected final String PRODUCT_ID = "ProductId";
+        if (pattern != null) {
+            final Matcher matcher = pattern.matcher(srcFieldValue);
+            if (!matcher.matches()) {
+                throw new PatternMismatchException(srcField, value, matcher);
+            }
+        }
 
-	protected final String PRODUCT_NAME = "ProductName";
+        facade.set(targetField, srcFieldValue);
+    }
 
-	protected final String QUANTITY = "Quantity";
+    @Override
+    public void setSrcFieldValue(String value) {
+        srcFieldValue = value;
+    }
 
-	public TextTransformRename(Builder b) {
-		orderField = b.orderField;
-		srcField = b.srcField;
-		pattern = b.pattern;
-	}
-
-	private boolean apply(String value, OrderFacade order) {
-		boolean success = true;
-		switch (orderField) {
-		case ORDER_ID:
-			order.setOrderId(value);
-			break;
-		case PRODUCT_ID:
-			order.setProductId(value);
-			break;
-		case PRODUCT_NAME:
-			order.setProductName(value);
-			break;
-		case QUANTITY:
-			order.setQuantity(value);
-		default:
-			success = false;
-			LOGGER.warning("Not applicable to " + orderField);
-			break;
-		}
-		return success;
-	}
-
-	@Override
-	public String getOrderField() {
-		return orderField;
-	}
-
-	@Override
-	public Pattern getPattern() {
-		return pattern;
-	}
-
-	@Override
-	public String getSrcField() {
-		return srcField;
-	}
-
-	@Override
-	public void run(Map<String, Integer> srcFieldIndexMap, List<String> currentRow, OrderFacade order) {
-		final String srcField = getSrcField();
-		final Integer index = srcFieldIndexMap.get(srcField);
-		if (index != null) {
-			final String value = currentRow.get(index);
-			setSrcFieldValue(value);
-		} else {
-			LOGGER.warning("Failed trasnformation for " + srcField + ". reason= index missing ");
-			return;
-		}
-
-		final boolean transformed = transform(order);
-		if (!transformed) {
-			LOGGER.warning("Failed " + toString());
-		}
-
-	}
-
-	@Override
-	public void setSrcFieldValue(String value) {
-		srcFieldValue = value;
-	}
-
-	@Override
-	public String toString() {
-		return "TextTransform [orderField=" + orderField + ", srcField=" + srcField + ", pattern=" + pattern + "]";
-	}
-
-	@Override
-	public boolean transform(OrderFacade order) {
-
-		if (pattern != null) {
-			final Matcher m = pattern.matcher(srcFieldValue);
-			if (!m.matches()) {
-				final String mismatch = m.replaceAll("");
-				LOGGER.warning(
-						"Skipped " + toString() + ": reason= pattern mismatches "
-								+ Arrays.toString(mismatch.toCharArray())
-								+ "; expected= " + pattern
-								+ "; srcFieldValue= " + srcFieldValue);
-				return false;
-			}
-		}
-
-		return apply(srcFieldValue, order);
-	}
+    @Override
+    public String toString() {
+        return "TextTransform [targetField=" + targetField + ", srcField=" + srcField + ", pattern=" + pattern + "]";
+    }
 
 }

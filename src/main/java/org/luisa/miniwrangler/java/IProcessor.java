@@ -6,16 +6,46 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 public interface IProcessor {
 
-	void close() throws IOException;
+    /**
+     * Close the file reader
+     *
+     * @throws IOException if an error occurs when closing the reader
+     */
+    void close() throws IOException;
 
-	IProcessor createLexer();
+    /**
+     * Create the lexer
+     *
+     * @return the lexer
+     */
+    IProcessor createLexer();
 
-	IProcessor createParserTree();
+    /**
+     * Create the parser tree
+     *
+     * @return the parse tree
+     */
+    IProcessor createParserTree();
 
-	ParseTreeListener getListener();
+    /**
+     * Return the listener
+     *
+     * @return the listener
+     */
+    ParseTreeListener getListener();
 
-	IProcessor processFile(String filePath);
+    /**
+     * Determine which file should be processed
+     *
+     * @return this IProcessor with a specified file path
+     */
+    IProcessor processFile(String filePath);
 
-	IProcessor walk();
+    /**
+     * Walk through the file
+     *
+     * @return this IProcessor after it has walked through the listener
+     */
+    IProcessor walk();
 
 }

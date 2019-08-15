@@ -4,4 +4,6 @@ public interface ITextTransformConcatBuilder extends ITextTransformBuilder {
 
 	ITextTransformBuilder concat(String... srcField);
 
+	ITextTransformBuilder with(String token);
+
 }

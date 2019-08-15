@@ -6,6 +6,7 @@ CONCAT: 'concat';
 RENAME: 'rename';
 AS: 'as';
 MATCH: 'match';
+WITH: 'with';
 
 ORDER_ID: 'OrderID';
 ORDER_DATE: 'OrderDate';
@@ -15,7 +16,7 @@ QUANTITY: 'Quantity';
 UNIT: 'Unit';
 
 MAPPED_PATTERN: ('YYYY' | 'MM' | 'dd' | '#,##0.0#');
-STRING_LITERAL: [A-Za-z0-9._$]+ | DQUOTA_STRING | SQUOTA_STRING | BQUOTA_STRING;
+STRING_LITERAL: [A-Za-z0-9._\-$]+ | DQUOTA_STRING | SQUOTA_STRING | BQUOTA_STRING;
 NEWLINE: '\r'? '\n';
 TERM: ([a-zA-Z0-9,.*^+\-&'":><#![\]] | ESC)+;
 WS: (' '|'\t')+ {skip();};

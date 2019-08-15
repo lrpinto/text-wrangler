@@ -1,14 +1,33 @@
 package org.luisa.miniwrangler.java.transform;
 
 /**
- * Builder interface defines different ways to configure a text transformation.
+ * An interface for building ITexTransform type instances
+ *
+ * @author Luisa Pinto
  */
 public interface ITextTransformBuilder {
 
-	ITextTransformBuilder as(String orderField);
+    /**
+     * Specify the targetField for this transformation
+     *
+     * @param targetField the target field
+     * @return this object with a target field specified
+     */
+    ITextTransformBuilder as(String targetField);
 
-	ITextTransform build();
+    /**
+     * Build some instance of type of ITextTransform
+     *
+     * @return the instance of ITextTransform type
+     */
+    ITextTransform build();
 
-	ITextTransformBuilder match(String pattern);
+    /**
+     * Specify the data pattern to which this transformation should be applied
+     *
+     * @param pattern the pattern
+     * @return this object with a pattern specified
+     */
+    ITextTransformBuilder match(String pattern);
 
 }

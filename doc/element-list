@@ -1,0 +1,11 @@
+org.luisa.miniwrangler
+org.luisa.miniwrangler.java
+org.luisa.miniwrangler.java.data.utils
+org.luisa.miniwrangler.java.exception
+org.luisa.miniwrangler.java.file.utils
+org.luisa.miniwrangler.java.parsing
+org.luisa.miniwrangler.java.table
+org.luisa.miniwrangler.java.table.order
+org.luisa.miniwrangler.java.transform
+org.luisa.miniwrangler.java.validation
+org.luisa.miniwrangler.java.validation.utils
