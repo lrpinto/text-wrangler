@@ -29,7 +29,7 @@ CREATE TABLE `order` (
   `order_dt` date NOT NULL,
   `product_id` varchar(45) NOT NULL,
   `product_name` varchar(255) DEFAULT NULL,
-  `quantity` decimal(10,0) NOT NULL,
+  `quantity` decimal(10,2) NOT NULL,
   `unit` varchar(8) DEFAULT 'kg',
   PRIMARY KEY (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -44,4 +44,4 @@ CREATE TABLE `order` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-12  6:34:39
+-- Dump completed on 2019-08-16  0:28:05
