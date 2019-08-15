@@ -5,7 +5,7 @@ import java.util.Collection;
 /**
  * Combinator or errors or successes
  *
- * @author developer
+ * @author Luisa Pinto
  *
  * @param <E> this type should represent an error
  * @param <S> this type should represent a success

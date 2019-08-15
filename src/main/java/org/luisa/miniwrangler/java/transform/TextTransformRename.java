@@ -12,6 +12,12 @@ import org.luisa.miniwrangler.java.exception.UnknownFieldException;
 import org.luisa.miniwrangler.java.exception.UnknownIndexException;
 import org.luisa.miniwrangler.java.table.Facade;
 
+/**
+ * Represents a transformation rule 'rename'
+ *
+ * @author Luisa Pinto
+ *
+ */
 public class TextTransformRename implements ITextTransformRename {
 
     public static class Builder implements ITextTransformRenameBuilder {
@@ -84,7 +90,7 @@ public class TextTransformRename implements ITextTransformRename {
         }
 
         final String value = currentRow.get(index);
-        setSrcFieldValue(value);
+        srcFieldValue = value;
 
         if (pattern != null) {
             final Matcher matcher = pattern.matcher(srcFieldValue);
@@ -94,11 +100,6 @@ public class TextTransformRename implements ITextTransformRename {
         }
 
         facade.set(targetField, srcFieldValue);
-    }
-
-    @Override
-    public void setSrcFieldValue(String value) {
-        srcFieldValue = value;
     }
 
     @Override

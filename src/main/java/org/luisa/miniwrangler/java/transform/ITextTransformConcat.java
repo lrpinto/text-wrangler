@@ -4,8 +4,12 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * Represent a IITextTransformConcat - a instance type of ITextTransformConcat
- * is created when a rule 'concat' is parsed
+ * An interface that describes the contract for objects ITextTransformConcat
+ * objects, which should represent a text transformation ITextTransform
+ *
+ * @implNote Each line in a transformations DSL specification with the rule
+ *           'concat', should be converted to a concrete implementation instance
+ *           of this interface
  *
  * @author Luisa Pinto
  *

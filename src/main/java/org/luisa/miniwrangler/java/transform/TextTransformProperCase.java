@@ -10,6 +10,12 @@ import org.luisa.miniwrangler.java.exception.UnknownFieldException;
 import org.luisa.miniwrangler.java.exception.UnknownIndexException;
 import org.luisa.miniwrangler.java.table.Facade;
 
+/**
+ * Represents a transformation rule 'properCase'
+ *
+ * @author Luisa Pinto
+ *
+ */
 public class TextTransformProperCase extends TextTransformRename {
 
     public TextTransformProperCase(Builder b) {

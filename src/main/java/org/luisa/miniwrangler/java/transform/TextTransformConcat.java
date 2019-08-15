@@ -14,6 +14,12 @@ import org.luisa.miniwrangler.java.exception.UnknownFieldException;
 import org.luisa.miniwrangler.java.exception.UnknownIndexException;
 import org.luisa.miniwrangler.java.table.Facade;
 
+/**
+ * Represents a transformation rule 'concat'
+ *
+ * @author Luisa Pinto
+ *
+ */
 public class TextTransformConcat implements ITextTransformConcat {
 
     public static class Builder implements ITextTransformConcatBuilder {

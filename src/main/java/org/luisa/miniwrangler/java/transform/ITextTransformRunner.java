@@ -1,5 +1,12 @@
 package org.luisa.miniwrangler.java.transform;
 
+/**
+ * An interface that describes the contract for objects ITextTransform objects,
+ * which should represent a text transformation
+ *
+ * @param <Facade> A facade to interact with the type of objects that will be
+ *                 transformed
+ */
 public interface ITextTransformRunner<Facade> {
 
     /*

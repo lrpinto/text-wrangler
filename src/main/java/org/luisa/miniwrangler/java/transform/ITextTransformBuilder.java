@@ -1,7 +1,8 @@
 package org.luisa.miniwrangler.java.transform;
 
 /**
- * An interface for building ITexTransform type instances
+ * An interface that describes the contract for objects able to build builder
+ * objects of type ITextTransformBuilder
  *
  * @author Luisa Pinto
  */

@@ -1,38 +1,41 @@
 package org.luisa.miniwrangler.java.validation;
 
 import java.util.Collection;
-import java.util.Iterator;
 
+import org.luisa.miniwrangler.java.validation.utils.CollectionsUtils;
+
+/**
+ * Combinator or errors and successes
+ *
+ * @author Liusa Pinto
+ *
+ * @param <E> this type should represent an error
+ * @param <S> this type should represent a success
+ */
 public class JoinCombinator<E, S> implements Combinator<E, S> {
 
-	@Override
-	public String combineErrors(Collection<E> errors) {
-		return join(errors);
-	}
+    /*
+     * (non-javadoc)
+     *
+     * @see
+     * org.luisa.miniwrangler.java.validation.Combinator.combineErrors(Collection<E>
+     * )
+     */
+    @Override
+    public String combineErrors(Collection<E> errors) {
+        return CollectionsUtils.join(errors);
+    }
 
-	@Override
-	public String combineSuccesses(Collection<S> successes) {
-		return join(successes);
-	}
-
-	private <O> String join(Collection<O> c) {
-		if (c == null || c.isEmpty()) {
-			return "";
-		}
-
-		final Iterator<O> it = c.iterator();
-		final StringBuilder sb = new StringBuilder();
-
-		if (it.hasNext()) {
-			sb.append(it.next());
-		}
-
-		while (it.hasNext()) {
-			sb.append(", ")
-					.append(it.next());
-		}
-
-		return sb.toString();
-	}
+    /*
+     * (non-javadoc)
+     *
+     * @see
+     * org.luisa.miniwrangler.java.validation.Combinator.combineSuccesses(Collection
+     * <E>)
+     */
+    @Override
+    public String combineSuccesses(Collection<S> successes) {
+        return CollectionsUtils.join(successes);
+    }
 
 }

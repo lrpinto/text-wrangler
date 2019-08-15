@@ -7,6 +7,12 @@ import org.luisa.miniwrangler.java.exception.InvalidDataException;
 import org.luisa.miniwrangler.java.exception.UnknownFieldException;
 import org.luisa.miniwrangler.java.table.Facade;
 
+/**
+ * Represents a transformation rule 'fixedValue'
+ *
+ * @author Luisa Pinto
+ *
+ */
 public class TextTransformFixedValue implements ITextTransformFixedValue {
 
     public static class Builder implements ITextTransformFixedValueBuilder {

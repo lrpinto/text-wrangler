@@ -10,9 +10,11 @@ import org.luisa.miniwrangler.java.exception.UnknownIndexException;
 import org.luisa.miniwrangler.java.table.Facade;
 
 /**
- * Represents a text transformation - Each line in a transformations DSL
- * specification should be converted to an instance of a subclass of this
- * interface
+ * An interface that describes the contract for objects ITextTransform objects,
+ * which should represent a text transformation
+ *
+ * @implNote Each line in a transformations DSL specification should be
+ *           converted to an instance of a subclass of this interface
  *
  * @author Luisa Pinto
  *
