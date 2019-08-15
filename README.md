@@ -43,7 +43,7 @@ Mini-wrangler system to massage a csv file as specified by given DSL based on AN
 - ANTLR4 for DSL and CSV processing and parsing support
 - JUnit for unit tests
 
-# Javadoc
+## Javadoc
 
 - Javadoc is under folder 'docs', containing additional usage, assumptions and implementation notes
 
