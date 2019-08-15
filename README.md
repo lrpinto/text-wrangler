@@ -15,8 +15,8 @@ Mini-wrangler system to massage a csv file as specified by given DSL based on AN
 
 ## Regex grammar
 
-- Only a limited set of patterns is being supported
-- A regex grammar to support the use of regular expressions is on the way, which should allow the use of any RegEx
+- Java Regex patterns are supported, which can be used to skip data
+- In addition, sugar patterns are supported through a mapped pattern util
 
 ## CSV parser
 
@@ -26,13 +26,12 @@ Mini-wrangler system to massage a csv file as specified by given DSL based on AN
 ## CSV Data
 
 - CSV data sample is in `main/java/resources/orders.csv`
-- No orders are created from this sample, as none of the lines fully matches the expected patterns, e.g. the given pattern for 'Product Number' was `[A-Z0-9]+` does not match any of the product number values as it doesn't allow the `-`, as such all lines are ignored
-- Datasamples that match the given patterns need to be created for testing, or the patterns need to be extended (to be solved with RegEx support)
+- No orders are created from this sample
+- Data values that do not match the provided pattern (if one) are skipped
 
 ## Assumptions
 
 - CSV data has a header row with field names
-- more...
 
 ## Tests
 
@@ -43,6 +42,9 @@ Mini-wrangler system to massage a csv file as specified by given DSL based on AN
 - MariaDB as JBDC driver
 - ANTLR4 for DSL and CSV processing and parsing support
 - JUnit for unit tests
-- Hibernator was added to support validation and in order to avoid writing own ValidateUtil, but it is to slow and it will be replaced by own ValidateUtil.
+
+# Javadoc
+
+- Javadoc is under folder 'docs', containing additional usage, assumptions and implementation notes
 
 
