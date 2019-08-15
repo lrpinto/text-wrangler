@@ -45,6 +45,6 @@ Mini-wrangler system to massage a csv file as specified by given DSL based on AN
 
 ## Javadoc
 
-- Javadoc is under folder 'docs', containing additional usage, assumptions and implementation notes
+- Javadoc is under folder 'doc', containing additional usage, assumptions and implementation notes
 
 
