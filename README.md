@@ -35,7 +35,7 @@ Mini-wrangler system to massage a csv file as specified by given DSL based on AN
 
 ## Tests
 
-- No coverage
+- App.java runs and saves orders for the given data and dsl samples.
 
 ## Dependencies
 
@@ -47,4 +47,14 @@ Mini-wrangler system to massage a csv file as specified by given DSL based on AN
 
 - Javadoc is under folder 'doc', containing additional usage, assumptions and implementation notes
 
+## Future Work
 
+- Refactor so as to abstract the type order (details given in the source code marked with // TODO comments), making it possible to easily reuse for other type of data
+- Create a utility to support database schema creation from the dsl or import schema from database (most likelly to bring a dependency such as QueryDSL in and extend it to fit the purpose) 
+- Extend the DSL grammar/lexer to allow setting up formatters for representation of the target object in stdout
+- Extend the DSL grammar/lexer to allow a filter regex construct that allows a user to parse only the objects that match that filter
+- Extend to support other DB languages, for example, it would be quite interesting to support Redis
+- Extend to support Map<>Reduce processor in order to allow parallel working with BigData
+- Extend to support Reactive streams and Publisher/Subscribers
+- Add proper JUnit Test suite with rich set of examples
+- Provide proper technical documentation, such as class diagram and interaction diagrams
