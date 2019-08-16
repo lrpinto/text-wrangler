@@ -12,6 +12,7 @@ import org.luisa.miniwrangler.TextTransformParser.DelimeterContext;
 import org.luisa.miniwrangler.TextTransformParser.FixedValueContext;
 import org.luisa.miniwrangler.TextTransformParser.OrderFieldContext;
 import org.luisa.miniwrangler.TextTransformParser.PatternContext;
+import org.luisa.miniwrangler.TextTransformParser.ProperCaseContext;
 import org.luisa.miniwrangler.TextTransformParser.RenameContext;
 import org.luisa.miniwrangler.TextTransformParser.SrcFieldContext;
 import org.luisa.miniwrangler.TextTransformParser.TransformationContext;
@@ -23,9 +24,11 @@ import org.luisa.miniwrangler.java.transform.ITextTransform;
 import org.luisa.miniwrangler.java.transform.ITextTransformBuilder;
 import org.luisa.miniwrangler.java.transform.ITextTransformConcatBuilder;
 import org.luisa.miniwrangler.java.transform.ITextTransformFixedValueBuilder;
+import org.luisa.miniwrangler.java.transform.ITextTransformRename;
 import org.luisa.miniwrangler.java.transform.ITextTransformRenameBuilder;
 import org.luisa.miniwrangler.java.transform.TextTransformConcat;
 import org.luisa.miniwrangler.java.transform.TextTransformFixedValue;
+import org.luisa.miniwrangler.java.transform.TextTransformProperCase;
 import org.luisa.miniwrangler.java.transform.TextTransformRename;
 
 /**
@@ -44,6 +47,7 @@ public class TextTransformCustomListener extends TextTransformParserBaseListener
     private final List<ITextTransform> transformations = new ArrayList<>();
 
     private ITextTransformBuilder builder = null;
+
     private final Set<String> srcFields = new HashSet<>();
 
     /**
@@ -95,13 +99,21 @@ public class TextTransformCustomListener extends TextTransformParserBaseListener
         builder.match(ctx.getText());
     }
 
+    @Override
+    public void enterProperCase(ProperCaseContext ctx) {
+        super.enterProperCase(ctx);
+        builder = new TextTransformProperCase.Builder();
+    }
+
     /**
      * On entering a 'rename' rule create a new TextTransformRename builder
      */
     @Override
     public void enterRename(RenameContext ctx) {
         super.enterRename(ctx);
-        builder = new TextTransformRename.Builder();
+        if (builder == null) {
+            builder = new TextTransformRename.Builder();
+        }
     }
 
     /**
@@ -141,14 +153,16 @@ public class TextTransformCustomListener extends TextTransformParserBaseListener
     public void exitTransformation(TransformationContext ctx) {
         super.exitTransformation(ctx);
         final ITextTransform transformation = builder.build();
-        transformations.add(transformation);
-        if (transformation instanceof TextTransformRename) {
+        if (transformation instanceof ITextTransformRename) {
             final String srcField = ((TextTransformRename) transformation).getSrcField();
             srcFields.add(srcField);
         } else if (transformation instanceof TextTransformConcat) {
             final List<String> fields = ((TextTransformConcat) transformation).getSrcFields();
             srcFields.addAll(fields);
         }
+        transformations.add(transformation);
+
+        builder = null;
     }
 
     /**
@@ -163,7 +177,7 @@ public class TextTransformCustomListener extends TextTransformParserBaseListener
 
     /**
      * Return source fields
-     * 
+     *
      * @return a list of source fields
      */
     public Set<String> getSrcFields() {
@@ -172,7 +186,7 @@ public class TextTransformCustomListener extends TextTransformParserBaseListener
 
     /**
      * Return transformations
-     * 
+     *
      * @return a list with transformations
      */
     public Collection<ITextTransform> getTransformations() {

@@ -18,7 +18,15 @@ import org.luisa.miniwrangler.java.table.Facade;
  */
 public class TextTransformProperCase extends TextTransformRename {
 
-    public TextTransformProperCase(Builder b) {
+    public static class Builder extends TextTransformRename.Builder {
+
+        @Override
+        public ITextTransform build() {
+            return new TextTransformProperCase(this);
+        }
+    }
+
+    public TextTransformProperCase(TextTransformRename.Builder b) {
         super(b);
     }
 
