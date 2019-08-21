@@ -1,5 +1,5 @@
-# Mini Wrangler
-Mini-wrangler system to massage a csv file as specified by given DSL based on ANTLR4.
+# Text Wrangler
+Text-wrangler app to transform CSV data as specified by bespoke ANTLR4 DSL.
 
 ## Usage
 
